@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+import { About } from "./components/About/About";
+import { Contact } from "./components/contact/Contact";
+import { Header } from "./components/header/Header";
+import { Hero } from "./components/Hero/Hero";
+import { Projects } from "./components/projects/Projects";
+import { Skills } from "./components/skills/Skills";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <head>
+        <title>Sasanka</title>
+      </head>
+      <div className="bg-[rgba(36,36,36)] h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth z-0 overflow-x-hidden">
+        {/* header */}
+        <Header />
+        {/* hero sec */}
+        <section id="hero" className="snap-center">
+          <Hero />
+        </section>
+        {/* about me */}
+        <section id="about" className="snap-center">
+          <About />
+        </section>
+
+        {/* project and experience */}
+        <section id="project" className="snap-center">
+          <Projects />
+        </section>
+
+        {/* skills */}
+        <section id="skills" className="snap-center">
+          <Skills />
+        </section>
+
+        {/* contact me */}
+        <section id="contact" className="snap-center">
+          <Contact />
+        </section>
+      </div>
+      <Toaster />
+    </>
   );
 }
 

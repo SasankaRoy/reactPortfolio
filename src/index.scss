@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300&family=Poppins:wght@300&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // background: #151515;
+  scroll-behavior: smooth !important;
+  overflow-x: hidden !important;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace "Poppins";
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace "Poppins";
+}
+::-webkit-scrollbar {
+  display: none;
+}
+@layer components {
+  .nav__btn {
+    @apply text-gray-500 border bg-transparent px-2 py-1 rounded-full border-[rgba(36,36,36)] transition-all duration-300 hover:text-[#F7AB0A]/90 hover:border-[#F7AB0A]/40 hover:shadow-inner hover:shadow-[#F7AB0A]/20;
+  }
+}

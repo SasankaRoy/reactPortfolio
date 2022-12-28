@@ -1,0 +1,19 @@
+.icon {
+  display: none !important;
+  cursor: pointer !important;
+}
+.main__div:hover {
+  .icon {
+    display: inline-flex !important;
+
+    transition: all cubic-bezier(0.175, 0.885, 0.32, 1.275) ease-in !important;
+  }
+}
+.Icon {
+  display: none;
+}
+.main__box:hover {
+  .Icon {
+    display: inline-flex !important;
+  }
+}
