@@ -13,7 +13,9 @@ export const About = () => {
   const [OpenAddAbout, setOpenAddAbout] = useRecoilState(AboutState);
   const [Data, setData] = useState();
   const getData = async () => {
-    const response = await axios.get("/api/about");
+    const response = await axios.get(
+      "https://portfolio-server-4csu.onrender.com/api/about"
+    );
     setData(response.data);
   };
   useEffect(() => {
@@ -27,8 +29,8 @@ export const About = () => {
         transition={{ duration: 1.5 }}
         className="h-screen relative flex
       flex-col text-center md:text-left 
-      md:flex-row max-w-full items-center 
-      justify-evenly px-7"
+      md:flex-col lg:flex-row w-full items-center 
+      justify-evenly px-7 "
       >
         <h1 className="absolute top-10 md:top-20 uppercase text-2xl tracking-[10px] text-gray-500 font-extralight z-50 font-[Poppins] ">
           about
@@ -38,7 +40,7 @@ export const About = () => {
           whileInView={{ y: 0, opacity: 1, scale: 1 }}
           transition={{ duration: 3.5 }}
           viewport={{ once: true }}
-          className="absolute scale-125 top-16 right-[5rem] md:top-24 z-30 opacity-60 cursor-pointer text-gray-300 hover:text-[#F7AB0A]/80 transition-all duration-300 ease-in-out"
+          className="absolute scale-125  top-16 right-[5rem] md:top-24 z-30 opacity-60 cursor-pointer text-gray-300 hover:text-[#F7AB0A]/80 transition-all duration-300 ease-in-out"
         >
           {user ? (
             <AddCircleOutlineOutlinedIcon
@@ -51,32 +53,29 @@ export const About = () => {
         </motion.div>
         <motion.img
           // src={User}
-          src={`http://localhost:5000/image/${Data?.data[0]?.aboutPic}`}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          src={`https://portfolio-server-4csu.onrender.com/image/${Data?.data[0]?.aboutPic}`}
+          initial={{ opacity: 0, y: -100 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
-          viewport={{ once: true }}
-          className="h-[14.4rem] w-[14.4rem] mt-16 flex-shrink-0
-        md:w-[24rem] md:h-[27rem]
-        lg:ml-16 object-cover rounded-full md:rounded-md z-50"
+          // viewport={{ once: true }}
+          className="h-[12.4rem] w-[12.4rem] mt-20 flex-shrink-0
+          md:w-[16rem] md:h-[19rem] lg:w-[24rem] lg:h-[27rem] lg:ml-16 object-cover rounded-full
+          md:rounded-md z-50"
         />
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
-          viewport={{ once: true }}
-          className="spacex-y-10 px-10 lg:px-20 z-50"
+          // viewport={{ once: true }}
+          className="spacex-y-10 px-10 lg:px-20 z-50 overflow-y-scroll w-full "
         >
-          <h3 className="text-4xl py-5 text-white font-[Poppins] tracking-[2px]">
+          <h3 className="text-4xl md:text-5xl py-2 text-white font-[Poppins] tracking-[2px]">
             Here's{" "}
             <span className="underline decoration-[#F7AB0A]/30">small</span>{" "}
             information
           </h3>
-          <p className="text-white text-md md:text-lg md:tracking-[2px] font-[Poppins]">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti
-            laudantium quibusdam repellat ex. Expedita, corrupti harum doloribus
-            reiciendis nobis eos quas similique voluptate nesciunt vitae
-            delectus. Dolorem deserunt cumque eaque!
+          <p className="text-white text-base md:text-lg md:tracking-[1.5px] font-[Poppins] md:p-2">
+            {Data?.data[0]?.smallDescription}
           </p>
         </motion.div>
 

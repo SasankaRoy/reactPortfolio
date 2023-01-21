@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Avatar } from "@mui/material";
 import React, { Fragment, useContext, useRef, useState } from "react";
-import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
+// import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthProvider";
 import { toast } from "react-hot-toast";
@@ -13,7 +13,14 @@ const AddSkills = ({ Open, setOpenAddSkills }) => {
     mainFile: "",
     fileName: "",
   });
-  const [Status, setStatus] = useState();
+  const [Status, setStatus] = useState({
+    status: "",
+    direction: "",
+  });
+  const handleInput = (event) => {
+    const { name, value } = event.target;
+    setStatus({ ...Status, [name]: value });
+  };
   const onTechImg = (e) => {
     const fileReader = new FileReader();
     if (e.target.files[0]) {
@@ -21,21 +28,34 @@ const AddSkills = ({ Open, setOpenAddSkills }) => {
     }
     fileReader.onload = (readedFile) => {
       setNewSkills({
-        mainFile: readedFile.target.result,
+        mainFile: e.target.files[0],
         fileName: e.target.files[0].name,
       });
     };
   };
   const sendData = async () => {
+    //"https://portfolio-server-4csu.onrender.com/api/skill/upload"
     try {
-      const response = await axios.post("api/skill/upload", {
-        Image: newskills.fileName,
-        Status,
-        id: user._id,
-      });
+      const response = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/skill/upload",
+        {
+          Image: newskills.fileName,
+          Status,
+          id: user._id,
+        },
+        { withCredentials: true }
+      );
+      const data = new FormData();
+      data.append("file", newskills.mainFile);
+      await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/upload",
+        data,
+        { withCredentials: true }
+      );
       if (response.status === 200) {
-        toast.success(response.data.success);
+        toast.success("success");
         setOpenAddSkills(false);
+        window.location.reload();
       }
     } catch (error) {
       toast.error("something went wrong 😢😢");
@@ -87,7 +107,7 @@ const AddSkills = ({ Open, setOpenAddSkills }) => {
                   <div>
                     <Avatar
                       onClick={() => filePicker.current.click()}
-                      src={newskills.mainFile && newskills.mainFile}
+                      src={newskills.mainFile}
                       className="mx-auto rounded-full scale-150 cursor-pointer object-cover"
                     />
                     <div className="mt-7 text-center sm:mt-5">
@@ -115,9 +135,18 @@ const AddSkills = ({ Open, setOpenAddSkills }) => {
                           placeholder="Enter current status..."
                           className="w-full text-center focus:ring-0 border-none tracking-[1px]"
                           name="status"
-                          onChange={(event) => {
-                            setStatus(event.target.value);
-                          }}
+                          onChange={handleInput}
+                          value={Status.status}
+                        />
+                      </div>
+                      <div className="mt-5">
+                        <input
+                          type="text"
+                          placeholder="Enter direction..."
+                          className="w-full text-center focus:ring-0 border-none tracking-[1px]"
+                          name="direction"
+                          onChange={handleInput}
+                          value={Status.direction}
                         />
                       </div>
                     </div>

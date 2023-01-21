@@ -28,25 +28,37 @@ export const AddHero = ({ Open, setOpenHero, data }) => {
     setHeaderText(e.target.value);
   };
   const deleteItem = async (cue) => {
-    const response = await axios.post("api/hero/post", {
-      id: user._id,
-      heroLines: cue,
-    });
+    const response = await axios.post(
+      "https://portfolio-server-4csu.onrender.com/api/hero/post",
+      {
+        id: user._id,
+        heroLines: cue,
+      }
+    );
     console.log(response, cue);
   };
   const saveHeader = async () => {
     try {
-      const response = await axios.post("api/hero/post", {
-        profilePic: HeaderImg,
-        heroLines: HeaderText,
-        id: user._id,
-      });
+      const response = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/hero/post",
+        {
+          profilePic: HeaderImg,
+          heroLines: HeaderText,
+          id: user._id,
+        },
+        { withCredentials: true }
+      );
       const data = new FormData();
       data.append("file", file);
-      const response2 = await axios.post("/api/upload", data);
+      const response2 = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/upload",
+        data,
+        { withCredentials: true }
+      );
       if (response.status === 200 || response2.status === 200) {
         toast.success("update successful");
         setOpenHero(false);
+        window.location.reload();
       }
     } catch (error) {
       toast.error("something went wrong 😢😢");

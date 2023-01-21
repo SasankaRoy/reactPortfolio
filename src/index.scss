@@ -8,7 +8,6 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // background: #151515;
   scroll-behavior: smooth !important;
   overflow-x: hidden !important;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -25,5 +24,22 @@ code {
 @layer components {
   .nav__btn {
     @apply text-gray-500 border bg-transparent px-2 py-1 rounded-full border-[rgba(36,36,36)] transition-all duration-300 hover:text-[#F7AB0A]/90 hover:border-[#F7AB0A]/40 hover:shadow-inner hover:shadow-[#F7AB0A]/20;
+  }
+}
+.ball {
+  animation: balls 0.4s ease-out infinite alternate;
+}
+.ball1 {
+  animation-delay: 0.1s;
+}
+.ball2 {
+  animation-delay: 0.2s;
+}
+.ball3 {
+  animation-delay: 0.3s;
+}
+@keyframes balls {
+  to {
+    transform: translateY(-10px);
   }
 }

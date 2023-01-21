@@ -29,17 +29,28 @@ export const AddAbout = ({ Open, setOpenAddAbout }) => {
   };
   const changeDetails = async () => {
     try {
-      const newDetails = await axios.post("/api/about/update", {
-        id: user._id,
-        aboutPic: ImgName,
-        smallDescription: dec,
-      });
+      const newDetails = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/about/update",
+        {
+          id: user._id,
+          aboutPic: ImgName,
+          smallDescription: dec,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       const data = new FormData();
       data.append("file", file);
-      const response = await axios.post("/api/upload", data);
+      const response = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/upload",
+        data,
+        { withCredentials: true }
+      );
       if (newDetails.status === 200 || response.status === 200) {
         toast.success(newDetails.data.success);
         setOpenAddAbout(false);
+        window.location.reload();
         return;
       }
     } catch (error) {
@@ -95,6 +106,7 @@ export const AddAbout = ({ Open, setOpenAddAbout }) => {
                       src={newImgs ? newImgs : Bg}
                       className="mx-auto cursor-pointer object-contain w-full rounded-md"
                       onClick={() => filePicker.current.click()}
+                      alt="aboutImg"
                     />
                     <div className="mt-7 text-center sm:mt-5">
                       <Dialog.Title

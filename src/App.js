@@ -12,6 +12,10 @@ function App() {
     <>
       <head>
         <title>Sasanka</title>
+        <meta
+          name="description"
+          content="I am sasanka roy, I am a full stack web developer based in west Bengal, India. And its my portfolio, here you can learn more about and veiw and vist some of my projects and if you are interested in me then you can contact me."
+        />
       </head>
       <div className="bg-[rgba(36,36,36)] h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth z-0 overflow-x-hidden">
         {/* header */}

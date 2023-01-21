@@ -19,14 +19,19 @@ const AddContact = ({ Open, setOpenAddContact }) => {
   };
   const onSave = async () => {
     try {
-      const response = await axios.post("/api/contact/update", {
-        Change,
-        id: user._id,
-      });
+      const response = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/contact/update",
+        {
+          Change,
+          id: user._id,
+        },
+        { withCredentials: true }
+      );
 
       if (response.status === 200) {
         toast.success(`${response.data.success} 😊😊`);
         setOpenAddContact(false);
+        window.location.reload();
         return;
       }
     } catch (error) {

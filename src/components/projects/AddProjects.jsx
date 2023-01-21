@@ -25,6 +25,7 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
     projectName: "",
     buildBy: "",
     projectDescription: "",
+    projectLink: "",
   });
 
   const OnchangeImage = (e) => {
@@ -32,7 +33,6 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
     setFile(e.target.files[0]);
     if (e.target.files[0]) {
       fileReader.readAsDataURL(e.target.files[0]);
-      // setImgs({ ...Imgs, projectImg: e.target.files[0].name });
     }
     fileReader.onload = (readedFile) => {
       setNewImgs({
@@ -46,7 +46,6 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
     setTechFile(e.target.files[0]);
     if (e.target.files[0]) {
       fileReader.readAsDataURL(e.target.files[0]);
-      // setImgs({ ...Imgs, techImg: e.target.files[0].name });
     }
     fileReader.onload = (readedFile) => {
       setNewTechImg({
@@ -62,21 +61,33 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
   };
   const save = async () => {
     try {
-      const response = await axios.post("/api/project/updata", {
-        id: user._id,
-        text: AddText,
-        Images: {
-          projectImg: newImgs.fileName,
-          techImg: newTechImg.fileName,
+      const response = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/project/updata",
+        {
+          id: user._id,
+          text: AddText,
+          Images: {
+            projectImg: newImgs.fileName,
+            techImg: newTechImg.fileName,
+          },
         },
-      });
+        { withCredentials: true }
+      );
       const data = new FormData();
       data.append("file", file);
       const data2 = new FormData();
       data2.append("file", Techfile);
 
-      const response2 = await axios.post("/api/upload", data2);
-      const response3 = await axios.post("/api/upload", data2);
+      const response2 = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/upload",
+        data2,
+        { withCredentials: true }
+      );
+      const response3 = await axios.post(
+        "https://portfolio-server-4csu.onrender.com/api/upload",
+        data2,
+        { withCredentials: true }
+      );
       if (
         response.status === 200 ||
         response2.status === 200 ||
@@ -84,8 +95,10 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
       ) {
         toast.success(response.data.success);
         setOpenAddProject(false);
+        window.location.reload();
       }
     } catch (error) {
+      console.log(error);
       toast.error("something went wrong 😢😢");
     }
   };
@@ -185,14 +198,7 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
                         >
                           {newTechImg.mainFile ? (
                             <>
-                              <div className="flex justify-evenly items-start space-x-2 mt-2 mb-2 flex-shrink-0 flex-wrap overflow-x-auto ">
-                                <Avatar src={newTechImg.mainFile} />
-                                <Avatar src={newTechImg.mainFile} />
-                                <Avatar src={newTechImg.mainFile} />
-                                <Avatar src={newTechImg.mainFile} />
-                                <Avatar src={newTechImg.mainFile} />
-                                <Avatar src={newTechImg.mainFile} />
-                                <Avatar src={newTechImg.mainFile} />
+                              <div className="flex justify-evenly items-start space-x-2 mt-2 mb-2 flex-shrink-0 flex-wrap overflow-x-auto rounded-full">
                                 <Avatar src={newTechImg.mainFile} />
                               </div>
                             </>
@@ -221,6 +227,16 @@ const AddProjects = ({ Open, setOpenAddProject }) => {
                           placeholder="Enter project details..."
                           className="w-full text-center focus:ring-0 border-none tracking-[1px]"
                           name="projectDescription"
+                          id=""
+                          onChange={Addprojects}
+                        />
+                      </div>
+                      <div className="mt-5">
+                        <input
+                          type="text"
+                          placeholder="Enter project link..."
+                          className="w-full text-center focus:ring-0 border-none tracking-[1px]"
+                          name="projectLink"
                           id=""
                           onChange={Addprojects}
                         />

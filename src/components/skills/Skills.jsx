@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import { motion } from "framer-motion";
 import { Skill } from "./Skill";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -14,18 +13,20 @@ export const Skills = () => {
   const { user } = useContext(AuthContext);
   const [OpenAddSkills, setOpenAddSkills] = useRecoilState(SkillState);
   const [SkillsData, setSkillsData] = useState([]);
-  const getSkills = async () => {
-    try {
-      const response = await axios.get("/api/skill");
-      if (response.status === 200) {
-        setSkillsData(response.data.findSkill);
-        return;
-      }
-    } catch (error) {
-      toast.error("something went wrong 😢😢");
-    }
-  };
   useEffect(() => {
+    const getSkills = async () => {
+      try {
+        const response = await axios.get(
+          "https://portfolio-server-4csu.onrender.com/api/skill"
+        );
+        if (response.status === 200) {
+          setSkillsData(response.data.findSkill);
+          return;
+        }
+      } catch (error) {
+        toast.error("something went wrong 😢😢");
+      }
+    };
     getSkills();
   }, []);
 
@@ -59,17 +60,17 @@ export const Skills = () => {
           )}
         </motion.div>
         <h1
-          className="absolute top-28 md:top-32 uppercase text-sm md:text-lg
-      tracking-[1px] text-gray-500 font-extralight font-[Poppins] p-1"
+          className="absolute top-24 md:top-32 uppercase text-sm md:text-lg
+          tracking-[1px] text-gray-500 font-extralight font-[Poppins]  text-center"
         >
           Hover over the skills to see the current state
         </h1>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 1 }}
           className="grid grid-cols-3 md:grid-cols-4 mt-20 md:mt-32 gap-5 
-        mx-auto items-center z-40 "
+          mx-auto items-center z-40 overflow-y-scroll scroll-smooth  w-full md:w-[55%]"
         >
           {SkillsData?.map((cur, id) => (
             <Skill key={id} data={cur} />

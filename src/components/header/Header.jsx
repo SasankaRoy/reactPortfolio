@@ -12,9 +12,15 @@ import modelState from "../../AtomModel/Atom";
 import { Login } from "../logIn/Login";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
+import Cookies from "js-cookie";
 export const Header = () => {
   const [Open, setOpen] = useRecoilState(modelState);
   const { user } = useContext(AuthContext);
+
+  const logOut = () => {
+    Cookies.remove("userToken");
+    window.location.reload();
+  };
 
   return (
     <>
@@ -35,9 +41,21 @@ export const Header = () => {
           }}
           className="social__icons flex justify-center items-center space-x-5"
         >
-          <GitHubIcon className="cursor-pointer hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/SasankaRoy"
+          >
+            <GitHubIcon className="cursor-pointer hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
+          </a>
           <InstagramIcon className="cursor-pointer hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
-          <LinkedInIcon className="cursor-pointer hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.linkedin.com/in/sasanka-roy-b472a1232/"
+          >
+            <LinkedInIcon className="cursor-pointer hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
+          </a>
           <WhatsAppIcon className="cursor-pointer hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
         </motion.div>
         <motion.div
@@ -58,7 +76,7 @@ export const Header = () => {
         >
           {user ? (
             <Tooltip title="Log out">
-              <LogoutOutlinedIcon />
+              <LogoutOutlinedIcon onClick={logOut} />
             </Tooltip>
           ) : (
             <Tooltip title="Log In" placement="bottom-end">
@@ -72,7 +90,9 @@ export const Header = () => {
             </Tooltip>
           )}
 
-          <EmailIcon className="hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
+          <a href="mailto:sasankaroy033@gmail.com">
+            <EmailIcon className="hover:text-[#F7AB0A]/70 transition-all duration-300 ease-in-out" />
+          </a>
           <h1 className=" text-gray-300 text-xl hidden md:inline-flex ">
             get in touch
           </h1>

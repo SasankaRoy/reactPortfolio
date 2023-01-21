@@ -8,9 +8,10 @@ import { Avatar } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/AuthProvider";
+import Cookies from "js-cookie";
 
 export const Login = ({ Open, setOpen }) => {
-  const { isFetching, user, error, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   const [OpenSignIn, setOpenSignIn] = useRecoilState(signInState);
   const [loginDel, setLoginDel] = useState({
@@ -23,9 +24,16 @@ export const Login = ({ Open, setOpen }) => {
   };
   const onLoggin = async () => {
     dispatch({ type: "LOGIN_START" });
-    const sendLogin = await axios.post("auth/login", loginDel);
+    const sendLogin = await axios.post(
+      "https://portfolio-server-4csu.onrender.com/auth/login",
+      loginDel,
+      {
+        withCredentials: true,
+      }
+    );
 
     if (sendLogin.status === 200) {
+      Cookies.set("userToken", sendLogin.data.token, { expires: 1 }); //setting the user token into the cookie
       dispatch({ type: "LOGIN_SUCCESS", payload: sendLogin.data.user });
       toast.success(`welcome back ${sendLogin.data.user.name}`);
       setOpen(false);
